@@ -1,17 +1,11 @@
 const holes = document.querySelectorAll('.hole')
 const scoreBoard = document.querySelector('.score')
 const moles = document.querySelectorAll('.mole')
-const timeLeft = document.querySelector('#time-left')
-
-//let currentTime = timeLeft.textContent
+const secondsLeft = document.querySelector('#time-left')
 
 let lastHole;
-let timeUp = false;
-//let currentTime = timeLeft.textContent
 let score = 0;
-
-//let currentTime = timeLeft.textContent
-
+let seconds = 20;
 
 //create a function to make a random time for mole to pop from the hole
 function randomTime(min, max) {
@@ -36,6 +30,8 @@ function peep(){
   const time = randomTime(500, 1000);
   const hole = randomHole(holes);
   hole.classList.add('up');
+  //setTimeout sätter bara en timer men man får inte reda på hur lång tid det gått, med setInterval så 
+  //sätter du att den ska köra t ex en gång i sekunden och så körs funktionen varje sekund
   setTimeout(() => {
       hole.classList.remove('up');
       if(!timeUp){
@@ -44,14 +40,28 @@ function peep(){
     }, time);
 }
 
-function startGame(){
+function startTimer () {
+  //The setInterval() method calls a function or evaluates an expression at specified 
+  //intervals (in milliseconds).
+  const interval = setInterval(() => {
+    seconds -= 1;
+    secondsLeft.textContent = seconds;
+      if (seconds === 0) {
+          //The setInterval() method will continue calling the function until 
+          //clearInterval() is called, or the window is closed.
+          clearInterval(interval)
+      }
+  }, 1000)
+}
+
+function startGame() {
   scoreBoard.textContent = 0;
   timeUp = false;
   score = 0;
+  seconds = 20;
   peep();
-  setTimeout(() => timeUp = true, 15000)
-  //let timerId = null
-  //timerId = setInterval(randomHole, 1000)
+  startTimer()
+  setInterval(() => timeUp = true, 20000) //show random minions for 20 seconds
 }
 
 function wack(e){
@@ -62,20 +72,3 @@ function wack(e){
 }
 
 moles.forEach(mole => mole.addEventListener('click', wack))
-
-/* function moveMole(){
-  let timerId = null
-  timerId = setInterval(randomHole, 1000)
-} */
-
-/* function countDown() {
-  currentTime--
-  timeLeft.textContent = currentTime
-
-  if(currentTime === 0) {
-    clearInterval(timerId)
-    alert('nu är det slut' + score)
-  }
-}
-
-let timerId = setInterval(countDown, 1000) */

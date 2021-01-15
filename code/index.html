@@ -10,9 +10,26 @@
 <body>
 
   <h1>Whack a Mole! </h1>
-  <span class="score">0</span>
-  <span class="time-left">60</span>
-  <button onClick="startGame()">Start!</button>
+  <div class="grid-button">
+    <div class="grid-button-child">
+      <button onClick="startGame()">Start!</button>
+    </div>
+    
+    <!-- <button onClick="Gameover()">Stop!</button> --> 
+  </div>
+
+  <div class="grid">
+     <div class="grid-child">
+      <span> Score;</span> 
+      <span class="score"> 0</span>
+     </div>
+
+     <div class="grid-child"> 
+      <span> Time;</span> 
+      <span id="time-left">20</span>
+     </div>
+  </div>
+  
 
   <div class="game">
     <div class="hole">
